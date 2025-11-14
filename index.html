@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christopher Montelongo | IT Infrastructure & Security</title>
+
+  <!-- Optional: Clean modern font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-elevated: #0b1020;
+      --bg-elevated-soft: #0f172a;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --accent-strong: #0ea5e9;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --danger: #f97373;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.7);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #0b1120 0, #020617 45%, #020617 100%);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.75), transparent);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.85);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 20% 0%, var(--accent-strong), transparent 55%),
+                  radial-gradient(circle at 80% 120%, #22c55e, transparent 55%),
+                  #020617;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+    }
+
+    .nav-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-title span:first-child {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-title span:last-child {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 0.2rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), #22c55e);
+      transition: width 0.18s ease-out;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 3.5rem 0 2.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      padding: 0.18rem 0.75rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.3), transparent 50%),
+                  radial-gradient(circle at 120% 120%, rgba(34, 197, 94, 0.3), transparent 55%),
+                  rgba(15, 23, 42, 0.8);
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero-kicker-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+    }
+
+    .hero-title {
+      font-size: 2.35rem;
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, #e5e7eb, #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 32rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .pill {
+      font-size: 0.78rem;
+      padding: 0.22rem 0.7rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .pill--accent {
+      border-color: rgba(56, 189, 248, 0.8);
+      background: var(--accent-soft);
+      color: #e0f2fe;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      border: none;
+      padding: 0.55rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: linear-gradient(to right, var(--accent-strong), #22c55e);
+      color: #0b1120;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn-ghost {
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 1.4rem;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .hero-aside {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.28), transparent 50%),
+        radial-gradient(circle at 120% 120%, rgba(34, 197, 94, 0.35), transparent 55%),
+        linear-gradient(to bottom right, #020617, #020617);
+      box-shadow: var(--shadow-soft);
+      padding: 1.4rem 1.5rem;
+    }
+
+    .hero-aside-heading {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #cbd5f5;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-aside-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+      font-size: 0.8rem;
+    }
+
+    .stat-card {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.94);
+      padding: 0.7rem 0.8rem;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-value {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .stat-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.2rem;
+      font-size: 0.7rem;
+      color: #a5b4fc;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    /* SECTION WRAPPER */
+    section {
+      padding: 2.2rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      margin: 0.2rem 0 0.7rem;
+    }
+
+    .section-description {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 2rem;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.95));
+      padding: 1.4rem 1.6rem;
+    }
+
+    .about-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .about-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.9rem 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .about-list li {
+      margin-bottom: 0.35rem;
+    }
+
+    .about-highlight {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* SKILLS */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+    }
+
+    .pill-soft {
+      border-radius: var(--radius-pill);
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+    }
+
+    .pill-soft-strong {
+      border-color: rgba(56, 189, 248, 0.9);
+      background: var(--accent-soft);
+      color: #e0f2fe;
+    }
+
+    .skills-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+      font-size: 0.85rem;
+    }
+
+    .skills-columns h4 {
+      margin: 0 0 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .skills-columns ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .skills-columns li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* EXPERIENCE */
+    .timeline {
+      border-left: 1px solid rgba(55, 65, 81, 0.9);
+      margin-top: 0.6rem;
+      padding-left: 1.4rem;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.3rem;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -1.65rem;
+      top: 0.25rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.8);
+    }
+
+    .timeline-role {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .timeline-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-body {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .timeline-body span {
+      color: #a5b4fc;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .project-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: linear-gradient(to bottom right, rgba(15, 23, 42, 0.98), rgba(12, 18, 34, 0.98));
+      padding: 1rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .project-title {
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .project-meta {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.45rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--muted);
+    }
+
+    /* CERTIFICATIONS */
+    .cert-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .cert-card {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.98);
+      padding: 0.9rem 1rem;
+    }
+
+    .cert-name {
+      font-weight: 500;
+      margin-bottom: 0.1rem;
+    }
+
+    .cert-issuer {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .cert-status {
+      font-size: 0.78rem;
+      color: #a5b4fc;
+    }
+
+    /* CONTACT */
+    .contact-card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.27), transparent 56%),
+                  radial-gradient(circle at 100% 110%, rgba(34, 197, 94, 0.24), transparent 55%),
+                  #020617;
+      padding: 1.3rem 1.5rem;
+    }
+
+    .contact-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 26rem;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.45rem 1.1rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      text-decoration: none;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-link:hover {
+      border-color: var(--accent);
+    }
+
+    footer {
+      padding: 1.5rem 0 2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-grid,
+      .about-grid,
+      .skills-columns,
+      .projects-grid,
+      .cert-list {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        padding-top: 2.2rem;
+      }
+
+      .hero-aside {
+        order: -1;
+      }
+
+      .projects-grid {
+        gap: 0.9rem;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none; /* keep it simple, no JS menu */
+      }
+
+      .hero-title {
+        font-size: 1.9rem;
+      }
+
+      .card {
+        padding: 1.1rem 1.2rem;
+      }
+
+      .contact-card {
+        padding: 1.1rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- NAVBAR -->
+    <header>
+      <div class="container">
+        <nav class="nav">
+          <div class="nav-left">
+            <div class="nav-logo">CM</div>
+            <div class="nav-title">
+              <span>Christopher Montelongo</span>
+              <span>IT Infrastructure • Support • Security</span>
+            </div>
+          </div>
+          <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#certs">Certs</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <main>
+      <div class="container">
+        <section class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="hero-kicker">
+                <span class="hero-kicker-dot"></span>
+                <span>Infrastructure • Support • Security-minded</span>
+              </div>
+              <h1 class="hero-title">
+                I help keep systems <span>reliable, secure, and usable.</span>
+              </h1>
+              <p class="hero-subtitle">
+                I’m an Information Systems Technician and soon-to-be BS graduate
+                focused on infrastructure, endpoint management, and high-quality
+                end-user support. I enjoy solving real problems for real people,
+                with a strong emphasis on doing things the right way.
+              </p>
+              <div class="hero-pills">
+                <span class="pill pill--accent">Windows • Microsoft 365 • AD</span>
+                <span class="pill">Networking & VPN</span>
+                <span class="pill">Security-first mindset</span>
+              </div>
+              <div class="hero-actions">
+                <a href="#projects">
+                  <button class="btn-primary">View selected projects</button>
+                </a>
+                <a href="#contact">
+                  <button class="btn-ghost">Let’s connect</button>
+                </a>
+              </div>
+            </div>
+
+            <aside class="hero-aside">
+              <div class="hero-aside-heading">Snapshot</div>
+              <div class="hero-aside-grid">
+                <div class="stat-card">
+                  <div class="stat-label">Current role</div>
+                  <div class="stat-value">Information Systems Technician</div>
+                  <div class="stat-tag">
+                    <span class="dot"></span>
+                    <span>Hands-on enterprise support</span>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Focus areas</div>
+                  <div class="stat-value">Infrastructure & Security</div>
+                  <div class="stat-tag">
+                    <span class="dot"></span>
+                    <span>Endpoint • Network • Access</span>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Location</div>
+                  <div class="stat-value">DFW, Texas (Hybrid/Onsite)</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Certifications</div>
+                  <div class="stat-value">CompTIA A+, Network+</div>
+                  <div class="stat-tag">
+                    <span class="dot"></span>
+                    <span>Security+ in progress</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about">
+          <div class="section-header">
+            <div class="section-kicker">About</div>
+            <h2 class="section-title">Who I am</h2>
+            <p class="section-description">
+              I bridge the gap between end-users, infrastructure, and security by combining
+              hands-on technical skills with clear communication and documentation.
+            </p>
+          </div>
+
+          <div class="about-grid">
+            <div class="card">
+              <p class="about-text">
+                I’m <span class="about-highlight">Christopher Montelongo</span>, an
+                Information Systems student and IT technician based in the DFW area.
+                I’ve worked across helpdesk, infrastructure, and operations—supporting
+                Windows environments, Microsoft 365, networking equipment, and line-of-business
+                applications.
+              </p>
+              <p class="about-text" style="margin-top:0.6rem;">
+                I enjoy taking messy, unclear technical problems and turning them
+                into well-documented, repeatable solutions. My experience spans:
+              </p>
+              <ul class="about-list">
+                <li>• Day-to-day support for users across different departments and skill levels</li>
+                <li>• Troubleshooting authentication, connectivity, and endpoint issues</li>
+                <li>• Working with vendors, IT leadership, and cross-functional teams</li>
+                <li>• Building a security-conscious approach into everyday IT operations</li>
+              </ul>
+            </div>
+            <div class="card">
+              <p class="about-text">
+                Outside of work and school, I spend time building out my home lab,
+                working through security platforms like TryHackMe, and refining my
+                understanding of how real-world systems behave under load, failure,
+                and attack.
+              </p>
+              <p class="about-text" style="margin-top:0.6rem;">
+                I’m especially interested in roles where I can:
+              </p>
+              <ul class="about-list">
+                <li>• Support and harden infrastructure at scale</li>
+                <li>• Own problems from ticket to resolution and documentation</li>
+                <li>• Grow into more advanced security or infrastructure engineering work</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills">
+          <div class="section-header">
+            <div class="section-kicker">Skills</div>
+            <h2 class="section-title">What I work with</h2>
+            <p class="section-description">
+              A mix of infrastructure, endpoint, networking, and security-oriented
+              skills I use in school, work, and my home lab.
+            </p>
+          </div>
+
+          <div class="card" style="margin-bottom:1rem;">
+            <div class="pill-group">
+              <span class="pill-soft pill-soft-strong">Windows 10/11 • Windows Server</span>
+              <span class="pill-soft">Active Directory / Entra ID</span>
+              <span class="pill-soft">Microsoft 365 (Teams, SharePoint, OneDrive)</span>
+              <span class="pill-soft">VPN, basic routing & switching</span>
+              <span class="pill-soft">Ticketing & ITSM workflows</span>
+              <span class="pill-soft">Endpoint security fundamentals</span>
+              <span class="pill-soft">PowerShell basics</span>
+              <span class="pill-soft">Python & Java (academic + projects)</span>
+              <span class="pill-soft">Home lab / virtualization</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="skills-columns">
+              <div>
+                <h4>Infrastructure & Support</h4>
+                <ul>
+                  <li>• User & workstation support (Tier 1 & 2)</li>
+                  <li>• Endpoint deployment & imaging</li>
+                  <li>• Basic Group Policy awareness</li>
+                  <li>• Printer, POS, and peripheral support</li>
+                  <li>• Remote access & RDP troubleshooting</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Security & Reliability</h4>
+                <ul>
+                  <li>• Security-first mindset in day-to-day IT</li>
+                  <li>• Patch/updates coordination with minimal disruption</li>
+                  <li>• TryHackMe / lab-based security practice</li>
+                  <li>• Account, MFA, and access troubleshooting</li>
+                  <li>• Documentation & knowledge base updates</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section id="experience">
+          <div class="section-header">
+            <div class="section-kicker">Experience</div>
+            <h2 class="section-title">Where I’ve been applying it</h2>
+            <p class="section-description">
+              A snapshot of roles and environments where I’ve supported users,
+              systems, and infrastructure.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-role">Information Systems Support Technician</div>
+                <div class="timeline-meta">Six Flags Over Texas • Arlington • 2023 – Present</div>
+                <div class="timeline-body">
+                  Provide Tier 1–2 support for Windows endpoints, Microsoft 365, and
+                  network-connected systems. Own tickets from intake to resolution,
+                  coordinate with vendors when needed, and keep users in the loop
+                  with clear communication. Focus areas include <span>endpoint stability,
+                  account & access issues, VPN, and incident documentation.</span>
+                </div>
+              </div>
+			  
+			  <!-- Secondary Experience
+              <div class="timeline-item">
+                <div class="timeline-role">Previous IT / Technical Role</div>
+                <div class="timeline-meta">Company Name • Location • 20XX – 20XX</div>
+                <div class="timeline-body">
+                  Supported day-to-day operations, handled hardware deployments,
+                  basic networking support, and contributed to process improvements
+                  and documentation in a fast-paced environment.
+                </div>
+              </div>
+			  -->
+			  
+            </div>
+          </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+          <div class="section-header">
+            <div class="section-kicker">Projects</div>
+            <h2 class="section-title">Selected work & labs</h2>
+            <p class="section-description">
+              A few examples that show how I think about infrastructure, security,
+              and building useful tools.
+            </p>
+          </div>
+
+          <div class="projects-grid">
+            <article class="project-card">
+              <div class="project-title">Personal Finance Web App</div>
+              <div class="project-meta">Python • Flask • SQLite • IIS (Reverse Proxy)</div>
+              <p>
+                A small full-stack app for tracking personal expenses, deployed
+                behind IIS on a Windows Server. Focused on authentication, data
+                validation, and simple, reliable deployment.
+              </p>
+              <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">Flask</span>
+                <span class="tag">IIS</span>
+                <span class="tag">SQLite</span>
+				<span class="tag">Windows Server</span>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-title">Java Desktop Inventory Tool</div>
+              <div class="project-meta">Java • JavaFX • SQLite</div>
+              <p>
+                Inventory management app built for a real muffler shop,
+                modeled with proper database design, JavaFX UI, and DAO pattern
+                for clean separation of concerns.
+              </p>
+              <div class="project-tags">
+                <span class="tag">Java</span>
+                <span class="tag">JavaFX</span>
+                <span class="tag">SQLite</span>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-title">Security Labs & TryHackMe</div>
+              <div class="project-meta">TryHackMe • Windows & Network Security</div>
+              <p>
+                Ongoing hands-on work in lab environments covering recon, basic
+                exploitation concepts, Windows security hardening, and blue-team
+                perspectives on monitoring and incident response.
+              </p>
+              <div class="project-tags">
+                <span class="tag">Security Fundamentals</span>
+                <span class="tag">TryHackMe</span>
+                <span class="tag">Blue-team mindset</span>
+              </div>
+            </article>
+			
+          </div>
+        </section>
+
+        <!-- CERTIFICATIONS -->
+        <section id="certs">
+          <div class="section-header">
+            <div class="section-kicker">Certifications</div>
+            <h2 class="section-title">Validated knowledge</h2>
+            <p class="section-description">
+              Industry certifications that back up my hands-on experience in support
+              and infrastructure.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="cert-list">
+              <div class="cert-card">
+                <div class="cert-name">CompTIA A+</div>
+                <div class="cert-issuer">CompTIA</div>
+                <div class="cert-status">Issued: 2025 • Active</div>
+              </div>
+              <div class="cert-card">
+                <div class="cert-name">CompTIA Network+</div>
+                <div class="cert-issuer">CompTIA</div>
+                <div class="cert-status">Issued: 2025 • Active</div>
+              </div>
+              <div class="cert-card">
+                <div class="cert-name">CompTIA Security+ (In Progress)</div>
+                <div class="cert-issuer">CompTIA</div>
+                <div class="cert-status">Actively studying and labbing</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+          <div class="section-header">
+            <div class="section-kicker">Contact</div>
+            <h2 class="section-title">Let’s talk</h2>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-text">
+              If you’re looking for someone who can support your users, stabilize
+              your endpoints, and bring a security-conscious mindset to everyday
+              IT operations, I’d love to connect.
+            </div>
+            <div class="contact-actions">
+              <a class="btn-link" href="mailto:chris79.tx@gmail.com">
+                Email me
+              </a>
+              <a class="btn-link" href="https://www.linkedin.com/in/chris-montelongo/" target="_blank" rel="noreferrer">
+                View LinkedIn
+              </a>
+              <!-- Optional: add a resume link
+              <a class="btn-link" href="YOUR_RESUME_LINK.pdf" target="_blank" rel="noreferrer">
+                Download resume
+              </a>
+              -->
+            </div>
+          </div>
+        </section>
+
+        <footer>
+          © <span id="year"></span> Christopher Montelongo — Built with HTML &amp; CSS — Design and Content Protected. All Rights Reserved.
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <!-- Designed & Written by Christopher Montelongo -->
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
